@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        email: '',
+        username: '',
         password: ''
     });
     const [error, setError] = useState('');
@@ -33,24 +33,16 @@ const LoginForm = () => {
             
             const data = await response.json();
             
-            if (!response.ok) {
-                throw new Error(data.message || 'Login failed');
-            }
-            
-            // Store both userId and token in localStorage
-            localStorage.setItem('userId', data.userId);
-            localStorage.setItem('token', data.token);
-            
-            // Set the token in Authorization header for future requests
-            if (data.token) {
+            if (data.status === 200) {
+                // Store auth data in localStorage
                 localStorage.setItem('token', data.token);
-                // You can set up an axios instance with the token here if using axios
+                localStorage.setItem('userId', data.userId);
+                
+                console.log('Login successful');
+                navigate('/');
+            } else {
+                throw new Error(data.message || 'Invalid credentials');
             }
-
-            console.log('Logged in successfully');
-            
-            // Redirect to home page after successful login
-            navigate('/');
             
         } catch (error) {
             setError(error.message || 'An error occurred during login');
@@ -66,7 +58,7 @@ const LoginForm = () => {
                 <div className="max-w-md mx-auto">
                     <div className="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:scale-[1.02]">
                         <div className="text-center mb-8">
-                            <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back! ❤️</h2>
+                            <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Darling! ❤️</h2>
                             <p className="text-gray-600">Sign in to find your valentine</p>
                         </div>
 
@@ -78,17 +70,17 @@ const LoginForm = () => {
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Email
+                                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Username
                                 </label>
                                 <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    value={formData.email}
+                                    type="text"
+                                    name="username"
+                                    id="username"
+                                    value={formData.username}
                                     required
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
-                                    placeholder="Enter your email"
+                                    placeholder="Enter your username"
                                     onChange={handleChange}
                                 />
                             </div>
@@ -118,18 +110,6 @@ const LoginForm = () => {
                             >
                                 {isLoading ? 'Signing In...' : 'Sign In'}
                             </button>
-
-                            <div className="text-center mt-4">
-                                <p className="text-sm text-gray-600">
-                                    Don't have an account?{' '}
-                                    <button 
-                                        onClick={() => navigate('/signup')}
-                                        className="text-pink-600 hover:text-pink-700 font-medium"
-                                    >
-                                        Sign up
-                                    </button>
-                                </p>
-                            </div>
                         </form>
                     </div>
                 </div>
