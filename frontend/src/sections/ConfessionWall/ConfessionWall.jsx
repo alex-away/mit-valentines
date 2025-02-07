@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import React from "react"
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const ConfessionWall = () => {
     const [confessions, setConfessions] = useState([])
     const [newConfession, setNewConfession] = useState("")
@@ -8,7 +10,7 @@ const ConfessionWall = () => {
 
     const fetchConfessions = async () => {
         try {
-            const response = await fetch("http://localhost:3000/confession/all")
+            const response = await fetch(`${API_URL}/confession/all`)
             const data = await response.json()
             if (data.status === 200) {
                 setConfessions(data.confessions)
@@ -23,16 +25,13 @@ const ConfessionWall = () => {
 
         setIsPosting(true)
         try {
-            const response = await fetch(
-                "http://localhost:3000/confession/post",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ message: newConfession }),
-                }
-            )
+            const response = await fetch(`${API_URL}/confession/post`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: newConfession }),
+            })
             const data = await response.json()
             if (data.status === 201) {
                 setNewConfession("")

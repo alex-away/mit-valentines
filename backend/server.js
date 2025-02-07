@@ -11,7 +11,16 @@ const ConfessionRouter = require("./routes/confessionRoutes")
 const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
-app.use(cors())
+app.use(
+    cors({
+        origin: [
+            "http://localhost:5173", // Local frontend
+            "https://your-frontend-vercel-url.vercel.app", // Production frontend
+        ],
+        methods: ["GET", "POST"],
+        credentials: true,
+    })
+)
 app.use(express.json())
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
