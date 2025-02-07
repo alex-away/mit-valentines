@@ -52,9 +52,14 @@ exports.loginUser = async (req,res)=>{
         
         const token = jwt.sign({ userId: findUser._id , email:findUser.email,names:findUser.username},process.env.JWT_KEY,
             { expiresIn:'1h'})
-
-        return res.json({status:200,message:'success',token})
+            const data={
+                username:findUser.username,
+                email:findUser.email,
+                name:findUser.name
+            }
+        return res.json({status:200,message:'success',token:token,user:data})
         
+
     } catch (error) {
         
         return res.json({error:"something wrong"})
