@@ -13,8 +13,8 @@ createRoot(document.getElementById("root")).render(
     <StrictMode>
         <Hero />
         <ConfessionWall />
-        <Challenges />
         <Quiz />
+        <Challenges />
         <ProfileSection isMatched={false} />
     </StrictMode>
 )

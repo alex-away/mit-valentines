@@ -10,54 +10,32 @@ const transporter = nodemailer.createTransport({
 });
 
 
-const sendOtpEmail = (to, otp) => {
-    const subject = 'OTP Verification';
-    //   const text = `Your OTP code is ${otp}. It is valid for 5 minutes.`;
-    const html = `<div>AawaraEthincs</div>
-            <div>
-              <p>Your OTP for verification <b>${otp}</b>.Do not share this OTP with anyone.</p>
-              <p>Thank You!</p>
-            </div>`;
 
-    const mailOptions = {
-        from: process.env.EMAIL_USER, // sender address
-        to: to,                       // list of receivers
-        subject: subject,             // Subject line
-        html: html                    // html body
-    };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('OTP email sent: %s', info.messageId);
-    });
-};
-
-const sendRegsiterMail = async (to, name, email, password) => {
-    const subject = 'Welcome to MIT-Valentine - Your Journey Begins Here! 💫';
+const sendRegsiterMail = async (to, name, username, password) => {
+    const subject = 'Welcome to MIT-Valentine - Where Hearts Connect! 💝';
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
             <div style="text-align: center; margin-bottom: 30px;">
-                <h1 style="color: #ff4b8d;">Your Valentine</h1>
-                <p style="font-size: 18px; color: #666;">Where Style Meets Soul ✨</p>
+                <h1 style="color: #ff4b8d;">MIT-Valentine</h1>
+                <p style="font-size: 18px; color: #666;">Where College Connections Bloom 💕</p>
             </div>
             <div style="background-color: #fff9f9; padding: 25px; border-radius: 10px; border: 1px solid #ffe6e6;">
                 <p style="font-size: 16px; line-height: 1.6;">Dear ${name},</p>
                 <p style="font-size: 16px; line-height: 1.6;">
-                    Welcome to our beautiful family! 🌸 We're absolutely thrilled to have you join us on this wonderful journey.
+                    Welcome to MIT-Valentine! 🌹 We're absolutely delighted to have you join our special community where meaningful connections begin.
                 </p>
                 <p style="font-size: 16px; line-height: 1.6;">
-                    At MIT-Valentine, we believe in creating magical moments through fashion. Your registration marks the beginning of a beautiful relationship with us. 
+                    Get ready to embark on a heartwarming journey where you might just find that special someone who makes your college life even more memorable. Whether you're looking for a romantic connection or a meaningful friendship, MIT-Valentine is here to make your experience magical.
                 </p>
                 <p style="font-size: 16px; line-height: 1.6;">
-                    Get ready to explore our enchanting collection and find pieces that speak to your soul. ✨
+                    Our platform is designed with care to help you connect with like-minded individuals who share your interests, values, and dreams. Remember, every great love story starts with a simple hello! 
                 </p>
                 
                 <div style="background-color: #fff0f5; padding: 20px; border-radius: 8px; margin-top: 25px; border: 2px dashed #ff4b8d;">
-                    <h3 style="color: #ff4b8d; margin-bottom: 15px; text-align: center;">Your Login Credentials</h3>
+                    <h3 style="color: #ff4b8d; margin-bottom: 15px; text-align: center;">Your Portal to Romance</h3>
                     <div style="background-color: white; padding: 15px; border-radius: 6px; margin-bottom: 10px;">
-                        <p style="margin: 5px 0; font-size: 15px;"><strong>Email:</strong> ${email}</p>
+                        <p style="margin: 5px 0; font-size: 15px;"><strong>Username:</strong> ${username}</p>
                     </div>
                     <div style="background-color: white; padding: 15px; border-radius: 6px;">
                         <p style="margin: 5px 0; font-size: 15px;"><strong>Password:</strong> ${password}</p>
@@ -66,7 +44,7 @@ const sendRegsiterMail = async (to, name, email, password) => {
 
                 <div style="text-align: center; margin-top: 35px;">
                     <p style="font-size: 16px; line-height: 1.6; color: #666;">
-                        Ready to start your romantic journey with us? Your perfect match awaits! 💕
+                        Your perfect match could be just a click away! Join us in creating beautiful connections and unforgettable moments. 💫
                     </p>
                     <a href="${process.env.FRONTEND_URL}" 
                        style="display: inline-block; 
@@ -80,13 +58,16 @@ const sendRegsiterMail = async (to, name, email, password) => {
                               margin: 20px 0;
                               box-shadow: 0 4px 15px rgba(255, 75, 141, 0.2);
                               transition: transform 0.3s ease;">
-                        Begin Your Love Story 💘
+                        Start Your Journey ✨
                     </a>
                 </div>
 
-                <div style="text-align: center; margin-top: 30px;">
-                    <p style="font-size: 16px; color: #ff4b8d; font-weight: bold;">
-                        With love and style,<br>
+                <div style="text-align: center; margin-top: 30px; font-style: italic;">
+                    <p style="font-size: 16px; color: #666;">
+                        "Every great love story is beautiful, but ours could be extraordinary!"
+                    </p>
+                    <p style="font-size: 16px; color: #ff4b8d; font-weight: bold; margin-top: 20px;">
+                        With love and excitement,<br>
                         Team MIT-Valentine 💝
                     </p>
                 </div>
@@ -108,33 +89,9 @@ const sendRegsiterMail = async (to, name, email, password) => {
     });
 };
 
-const sendIssueReported = (subject,main,orderid) => {
-    const Subject = `${subject}`;
-    const html = `<div>AawaraEthincs</div>
-            <div>
-                <p>A new issue has been reported for the ORDER_ID:${orderid}</p>
-                <P>${main}</p>
-                <p>Kindly Login and Check the Status!</p>
-            </div>`;
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER, // sender address
-        to: 'jatinvardhani@gmail.com',                       // list of receivers
-        subject: Subject,             // Subject line
-        html: html                    // html body
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log("error",error);
-        }
-        console.log('new issuse reported!');
-
-    });
-};
-
 
 
 
 // module.exports = sendOrderMail
-module.exports = {sendOtpEmail,sendRegsiterMail,sendIssueReported};
+module.exports = {sendRegsiterMail};
+

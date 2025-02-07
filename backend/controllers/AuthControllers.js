@@ -25,7 +25,7 @@ exports.registerUser = async (req, res) => {
     }
     try {
         const hashedPassword = await bcrypt.hash(password, 12)
-        const username = gender === 'M' ? uniqueUsernameGenerator(name_generator_config_boys) : uniqueUsernameGenerator(name_generator_config_girls)
+        const username = gender === 'Male' ? uniqueUsernameGenerator(name_generator_config_boys) : uniqueUsernameGenerator(name_generator_config_girls)
         const createUser = await USER_DATA({
             User_Name: username,
             Name: name,
@@ -34,7 +34,7 @@ exports.registerUser = async (req, res) => {
             gender: gender
         })
         await createUser.save()
-        //sendRegsiterMail(email,name,email,password);
+        sendRegsiterMail(email,name,email,password);
         console.log('mail sent');
         return res.json({ status:201, message: 'success' })
 
@@ -48,15 +48,15 @@ exports.registerUser = async (req, res) => {
 
 //login
 exports.loginUser = async (req,res)=>{
-    const {email,password} = req.body
-    const findUser = await USER_DATA.findOne({email})
+    const {username,password} = req.body
+    const findUser = await USER_DATA.findOne({User_Name:username})
     if(!findUser) return res.json({status:404,error:'User doesnot exist'})
     try {
         const isPassowrdcValid = await bcrypt.compare(password,findUser.password)
 
         if(!isPassowrdcValid) return  res.json({status:401,error:'Password Incorrect'})
         
-        const token = jwt.sign({ userId: findUser._id , email:findUser.email,names:findUser.First_Name},process.env.JWT_KEY,
+        const token = jwt.sign({ userId: findUser._id , email:findUser.email,names:findUser.username},process.env.JWT_KEY,
             { expiresIn:'1h'})
 
         return res.json({status:200,message:'success',token})
