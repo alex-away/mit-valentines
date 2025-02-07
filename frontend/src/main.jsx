@@ -17,8 +17,8 @@ const Home = () => (
         <MatchFinder />
         <HobbiesForm />
         <ConfessionWall />
-        <Quiz />
         <Challenges />
+        <Quiz />
         <ProfileSection isMatched={false} />
     </div>
 )
