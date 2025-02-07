@@ -13,10 +13,10 @@ function App() {
     return (
         <MainLayout>
             <Hero />
-            <ProfileSection isMatched={false} />
             <ConfessionWall />
             <Challenges />
             <Quiz />
+            <ProfileSection isMatched={false} />
         </MainLayout>
     )
 }
