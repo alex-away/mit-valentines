@@ -7,6 +7,7 @@ const LoginForm = () => {
         password: ''
     });
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -17,12 +18,32 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError('');
+        
         try {
-            const response = await axios.post('https://mit-valentine-service.vercel.app/user/login', formData);
-            localStorage.setItem('userId', response.data.userId);
+            const response = await fetch('https://mit-valentine-service.vercel.app/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Login failed');
+            }
+            
+            localStorage.setItem('userId', data.userId);
             console.log('Logged in successfully');
+            
         } catch (error) {
-            setError(error.response?.data?.message || 'An error occurred');
+            setError(error.message || 'An error occurred during login');
+            console.error('Login error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -75,9 +96,12 @@ const LoginForm = () => {
 
                             <button
                                 type="submit"
-                                className="w-full py-3 px-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg font-medium hover:from-pink-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all hover:-translate-y-0.5"
+                                disabled={isLoading}
+                                className={`w-full py-3 px-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg font-medium 
+                                ${!isLoading ? 'hover:from-pink-600 hover:to-purple-700 hover:-translate-y-0.5' : 'opacity-75 cursor-not-allowed'}
+                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transform transition-all`}
                             >
-                                Sign In
+                                {isLoading ? 'Signing In...' : 'Sign In'}
                             </button>
                         </form>
 
