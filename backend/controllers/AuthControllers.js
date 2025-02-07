@@ -7,11 +7,6 @@ const { sendRegsiterMail } = require('../services/mailservices')
 const { uniqueUsernameGenerator } = require('unique-username-generator');
 const {name_generator_config_boys,name_generator_config_girls} = require('../services/userNameService')
 
-// const username1 = uniqueUsernameGenerator(name_generator_config_boys);
-// const username2 = uniqueUsernameGenerator(name_generator_config_girls);
-// console.log(username1);
-// console.log(username2);
-
 
 exports.registerUser = async (req, res) => {
 
@@ -32,9 +27,10 @@ exports.registerUser = async (req, res) => {
             gender: gender
         })
         await createUser.save()
-        sendRegsiterMail(email,name,email,password);
+        sendRegsiterMail(email,name,username,password);
         console.log('mail sent');
         return res.json({ status:201, message: 'success' })
+
 
 
     } catch (error) {
@@ -64,6 +60,18 @@ exports.loginUser = async (req,res)=>{
         return res.json({error:"something wrong"})
     }
 } 
+
+//update hobbies
+exports.updateHobbies = async(req,res)=>{
+    const {hobbies} = req.body;
+    const {token} = req.headers;
+    const {userId} = jwt.verify(token,process.env.JWT_KEY);
+    const findUser = await USER_DATA.findOne({_id:userId})
+    if(!findUser) return res.json({status:404,error:'User doesnot exist'})
+    findUser.Hobbies = hobbies;
+    await findUser.save();
+    return res.json({status:200,message:'Hobbies updated'})
+}
 
 
 
