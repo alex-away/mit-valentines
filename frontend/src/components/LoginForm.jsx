@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 const LoginForm = () => {
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
-        email: "",
+        username: "",
         password: "",
     })
     const [error, setError] = useState("")
@@ -91,16 +91,16 @@ const LoginForm = () => {
                                     htmlFor="email"
                                     className="block text-sm font-medium text-gray-700 mb-1"
                                 >
-                                    Email
+                                    Username
                                 </label>
                                 <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    value={formData.email}
+                                    type="username"
+                                    name="username"
+                                    id="username"
+                                    value={formData.username}
                                     required
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors"
-                                    placeholder="Enter your email"
+                                    placeholder="Enter your username"
                                     onChange={handleChange}
                                 />
                             </div>
