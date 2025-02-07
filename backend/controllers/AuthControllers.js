@@ -13,7 +13,6 @@ const {name_generator_config_boys,name_generator_config_girls} = require('../ser
 // console.log(username2);
 
 
-
 exports.registerUser = async (req, res) => {
 
 
