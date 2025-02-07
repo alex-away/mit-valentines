@@ -11,10 +11,10 @@ import Quiz from "./sections/Challenges/quiz.jsx"
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-             <Hero />
-            <ProfileSection isMatched={false} />
-            <ConfessionWall />
-            <Challenges />
-            <Quiz />
+        <Hero />
+        <ConfessionWall />
+        <Challenges />
+        <Quiz />
+        <ProfileSection isMatched={false} />
     </StrictMode>
 )
