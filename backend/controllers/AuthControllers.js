@@ -3,6 +3,7 @@ const { USER_DATA } = require('../models/userDb')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+const { sendRegsiterMail } = require('../services/mailservices')
 
 exports.registerUser = async (req, res) => {
 
@@ -22,7 +23,7 @@ exports.registerUser = async (req, res) => {
             password: hashedPassword
         })
         await createUser.save()
-
+    sendRegsiterMail(email,firstname);
         return res.json({ status:201, message: 'success' })
 
 
