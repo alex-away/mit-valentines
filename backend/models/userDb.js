@@ -5,6 +5,7 @@ const USER_LOGIN_DATA = new mongoose.Schema({
     email: String,
     password: String,
     image_url:String,
+    gender:String,
 },
 {
         collection: 'USER_DATA'

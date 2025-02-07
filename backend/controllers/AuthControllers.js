@@ -4,25 +4,37 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const { sendRegsiterMail } = require('../services/mailservices')
+const { uniqueUsernameGenerator } = require('unique-username-generator');
+const {name_generator_config_boys,name_generator_config_girls} = require('../services/userNameService')
+
+// const username1 = uniqueUsernameGenerator(name_generator_config_boys);
+// const username2 = uniqueUsernameGenerator(name_generator_config_girls);
+// console.log(username1);
+// console.log(username2);
+
+
 
 exports.registerUser = async (req, res) => {
 
-    const { email, password, name } = req.body
-    console.log(email,password,name);
+
+    const { email, password, name ,gender} = req.body
+    console.log(email,password,name,gender);
     const findUser = await USER_DATA.findOne({ email: email })
     if (findUser) {
         return res.json({ status:200 ,error:'User Exist'})
     }
     try {
         const hashedPassword = await bcrypt.hash(password, 12)
-
+        const username = gender === 'M' ? uniqueUsernameGenerator(name_generator_config_boys) : uniqueUsernameGenerator(name_generator_config_girls)
         const createUser = await USER_DATA({
+            User_Name: username,
             Name: name,
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            gender: gender
         })
         await createUser.save()
-        sendRegsiterMail(email,name,email,password);
+        //sendRegsiterMail(email,name,email,password);
         console.log('mail sent');
         return res.json({ status:201, message: 'success' })
 
