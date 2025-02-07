@@ -34,7 +34,7 @@ const sendOtpEmail = (to, otp) => {
     });
 };
 
-const sendRegsiterMail = (to,name) => {
+const sendRegsiterMail = async (to, name, email, password) => {
     const subject = 'Welcome to MIT-Valentine - Your Journey Begins Here! 💫';
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
@@ -52,8 +52,38 @@ const sendRegsiterMail = (to,name) => {
                 </p>
                 <p style="font-size: 16px; line-height: 1.6;">
                     Get ready to explore our enchanting collection and find pieces that speak to your soul. ✨
-
                 </p>
+                
+                <div style="background-color: #fff0f5; padding: 20px; border-radius: 8px; margin-top: 25px; border: 2px dashed #ff4b8d;">
+                    <h3 style="color: #ff4b8d; margin-bottom: 15px; text-align: center;">Your Login Credentials</h3>
+                    <div style="background-color: white; padding: 15px; border-radius: 6px; margin-bottom: 10px;">
+                        <p style="margin: 5px 0; font-size: 15px;"><strong>Email:</strong> ${email}</p>
+                    </div>
+                    <div style="background-color: white; padding: 15px; border-radius: 6px;">
+                        <p style="margin: 5px 0; font-size: 15px;"><strong>Password:</strong> ${password}</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 35px;">
+                    <p style="font-size: 16px; line-height: 1.6; color: #666;">
+                        Ready to start your romantic journey with us? Your perfect match awaits! 💕
+                    </p>
+                    <a href="${process.env.FRONTEND_URL}" 
+                       style="display: inline-block; 
+                              background: linear-gradient(45deg, #ff4b8d, #ff6b6b);
+                              color: white;
+                              padding: 15px 35px;
+                              text-decoration: none;
+                              border-radius: 25px;
+                              font-size: 16px;
+                              font-weight: bold;
+                              margin: 20px 0;
+                              box-shadow: 0 4px 15px rgba(255, 75, 141, 0.2);
+                              transition: transform 0.3s ease;">
+                        Begin Your Love Story 💘
+                    </a>
+                </div>
+
                 <div style="text-align: center; margin-top: 30px;">
                     <p style="font-size: 16px; color: #ff4b8d; font-weight: bold;">
                         With love and style,<br>
@@ -61,26 +91,22 @@ const sendRegsiterMail = (to,name) => {
                     </p>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #666;">
-                <p>Stay connected with us on our social media for daily doses of inspiration!</p>
-            </div>
         </div>`;
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: to,  // Now sending to the user's email address
+        to: to,
         subject: subject,
         html: html
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+            return console.log("err",error);
         }
         console.log('Welcome email sent successfully');
     });
 };
-
 
 const sendIssueReported = (subject,main,orderid) => {
     const Subject = `${subject}`;

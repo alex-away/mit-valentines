@@ -22,12 +22,13 @@ exports.registerUser = async (req, res) => {
             password: hashedPassword
         })
         await createUser.save()
-    sendRegsiterMail(email,name);
+        sendRegsiterMail(email,name,email,password);
         return res.json({ status:201, message: 'success' })
 
 
     } catch (error) {
         console.log(error)
+        return res.json({status:500,error:'something went wrong'})
     }
 }
 
