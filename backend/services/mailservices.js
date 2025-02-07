@@ -46,7 +46,7 @@ const sendRegsiterMail = async (to, name, username, password) => {
                     <p style="font-size: 16px; line-height: 1.6; color: #666;">
                         Your perfect match could be just a click away! Join us in creating beautiful connections and unforgettable moments. 💫
                     </p>
-                    <a href="${process.env.FRONTEND_URL}" 
+                    <a href="${process.env.FRONTEND_URL+"/login"}" 
                        style="display: inline-block; 
                               background: linear-gradient(45deg, #ff4b8d, #ff6b6b);
                               color: white;
