@@ -21,7 +21,7 @@ const PREDEFINED_HOBBIES = [
     "Gardening 🌱",
     "Fashion 👗",
     "Coding 💻",
-    "Astronomy 🔭"
+    "Astronomy 🔭",
 ]
 
 const HobbiesForm = () => {
@@ -32,9 +32,9 @@ const HobbiesForm = () => {
     const navigate = useNavigate()
 
     const toggleHobby = (hobby) => {
-        setSelectedHobbies(prev => 
+        setSelectedHobbies((prev) =>
             prev.includes(hobby)
-                ? prev.filter(h => h !== hobby)
+                ? prev.filter((h) => h !== hobby)
                 : [...prev, hobby]
         )
     }
@@ -86,8 +86,8 @@ const HobbiesForm = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden m-4 p-6">
-            <div className="text-center mb-6">
+        <div id="hobbies-section" className="bg-white rounded-xl shadow-lg p-8">
+            <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-pink-600 mb-2">
                     Select Your Hobbies ✨
                 </h2>
@@ -97,29 +97,29 @@ const HobbiesForm = () => {
             </div>
 
             {error && (
-                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+                <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg text-center">
                     {error}
                 </div>
             )}
 
             {success && (
-                <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
+                <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg text-center">
                     {success}
                 </div>
             )}
 
-            <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {PREDEFINED_HOBBIES.map((hobby) => (
                         <button
                             key={hobby}
                             type="button"
                             onClick={() => toggleHobby(hobby)}
-                            className={`p-3 rounded-lg text-sm font-medium transition-all duration-200 
+                            className={`p-3 rounded-xl text-sm font-medium transition-all
                                 ${
                                     selectedHobbies.includes(hobby)
-                                        ? "bg-pink-500 text-white shadow-lg scale-105"
-                                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                        ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
+                                        : "bg-gray-100 text-gray-700"
                                 }
                             `}
                         >
@@ -130,17 +130,18 @@ const HobbiesForm = () => {
 
                 <div className="flex flex-col items-center gap-4">
                     <div className="text-sm text-gray-600">
-                        Selected: {selectedHobbies.length} / {PREDEFINED_HOBBIES.length}
+                        Selected: {selectedHobbies.length} /{" "}
+                        {PREDEFINED_HOBBIES.length}
                     </div>
 
                     <button
                         type="submit"
                         disabled={isSubmitting || selectedHobbies.length === 0}
-                        className={`px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 
-                        text-white rounded-lg font-medium transition-all transform
+                        className={`px-12 py-4 bg-gradient-to-r from-pink-500 to-purple-600 
+                        text-white rounded-xl font-medium text-lg transition-all
                         ${
                             !isSubmitting && selectedHobbies.length > 0
-                                ? "hover:from-pink-600 hover:to-purple-700 hover:-translate-y-0.5"
+                                ? ""
                                 : "opacity-75 cursor-not-allowed"
                         }`}
                     >
@@ -150,21 +151,21 @@ const HobbiesForm = () => {
             </form>
 
             {selectedHobbies.length > 0 && (
-                <div className="mt-6">
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                <div className="mt-8">
+                    <h3 className="text-lg font-semibold text-gray-700 mb-4">
                         Your Selected Hobbies:
                     </h3>
                     <div className="flex flex-wrap gap-2">
                         {selectedHobbies.map((hobby) => (
                             <span
                                 key={hobby}
-                                className="inline-flex items-center px-3 py-1 bg-pink-100 text-pink-700 rounded-full"
+                                className="inline-flex items-center px-4 py-2 bg-pink-100 text-pink-700 rounded-full"
                             >
                                 {hobby}
                                 <button
                                     type="button"
                                     onClick={() => toggleHobby(hobby)}
-                                    className="ml-2 text-pink-600 hover:text-pink-800"
+                                    className="ml-2 text-pink-600"
                                 >
                                     ×
                                 </button>
@@ -177,4 +178,4 @@ const HobbiesForm = () => {
     )
 }
 
-export default HobbiesForm 
+export default HobbiesForm
