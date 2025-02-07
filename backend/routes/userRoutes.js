@@ -7,7 +7,7 @@ const {
 const { findMatch } = require("../controllers/FindMatch")
 const UserRouter = express.Router()
 const jwt = require("jsonwebtoken")
-const USER_DATA = require("../models/userModel")
+const { USER_DATA } = require("../models/userDb")
 
 UserRouter.post("/register", registerUser)
 UserRouter.post("/login", loginUser)
