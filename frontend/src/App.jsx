@@ -7,6 +7,8 @@ import Quiz from "./sections/Challenges/quiz"
 import React from "react"
 import "./App.css"
 
+// Lawda APP.JSX
+
 function App() {
     return (
         <MainLayout>

@@ -6,10 +6,10 @@ const ConfessionWall = () => {
     const [confessions, setConfessions] = useState([])
     const [newConfession, setNewConfession] = useState("")
     const [isPosting, setIsPosting] = useState(false)
+    const [isFormOpen, setIsFormOpen] = useState(false)
 
     const fetchConfessions = async () => {
         try {
-            console.log("Fetching from:", `${API_URL}/confession/all`) // Debug log
             const response = await fetch(`${API_URL}/confession/all`)
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`)
@@ -54,113 +54,104 @@ const ConfessionWall = () => {
         fetchConfessions()
     }, [])
 
+    const featuredConfessions = confessions.slice(0, 4)
+    const scrollableConfessions = confessions.slice(4)
+
     return (
-        <section className="py-16 bg-gradient-to-br from-pink-100 via-purple-50 to-pink-100 min-h-screen">
-            <div className="max-w-4xl mx-auto px-4">
-                <div className="text-center mb-12">
-                    <h2 className="text-4xl md:text-5xl font-bold text-pink-600 mb-4">
+        <section className="py-8 bg-gradient-to-br from-pink-100 via-purple-50 to-pink-100">
+            <div className="max-w-6xl mx-auto px-4">
+                <div className="text-center mb-6">
+                    <h2 className="text-3xl md:text-4xl font-bold text-pink-600 mb-2">
                         Confession Wall 💝
                     </h2>
-                    <p className="text-gray-600 text-lg">
-                        Share your feelings anonymously with the MIT-AoE
-                        community
+                    <p className="text-gray-600 text-sm">
+                        Share your feelings anonymously
                     </p>
                 </div>
 
-                {/* Confession Form */}
-                <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl mb-12 transform transition-all duration-300 hover:shadow-2xl border border-pink-100">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                        Write Your Confession ✨
-                    </h3>
-                    <textarea
-                        value={newConfession}
-                        onChange={(e) => setNewConfession(e.target.value)}
-                        className="w-full h-32 p-4 border border-pink-200 rounded-xl mb-4 
-                        focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent
-                        text-gray-700 text-base resize-none transition-all duration-300
-                        placeholder:text-gray-400 placeholder:text-sm"
-                        placeholder="Pour your heart out... Your secret is safe with us 💖"
-                    />
-                    <div className="flex justify-end">
-                        <button
-                            onClick={postConfession}
-                            disabled={isPosting || !newConfession.trim()}
-                            className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 
-                            text-white rounded-xl hover:from-pink-600 hover:to-purple-600 
-                            disabled:opacity-50 transition-all duration-300 transform 
-                            hover:-translate-y-1 active:translate-y-0 text-base
-                            disabled:hover:transform-none shadow-md hover:shadow-xl"
-                        >
-                            {isPosting ? (
-                                <span className="flex items-center">
-                                    <svg
-                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <circle
-                                            className="opacity-25"
-                                            cx="12"
-                                            cy="12"
-                                            r="10"
-                                            stroke="currentColor"
-                                            strokeWidth="4"
-                                        ></circle>
-                                        <path
-                                            className="opacity-75"
-                                            fill="currentColor"
-                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                        ></path>
-                                    </svg>
-                                    Posting...
-                                </span>
-                            ) : (
-                                "Share Your Confession 💝"
-                            )}
-                        </button>
-                    </div>
+                {/* Collapsible Confession Form */}
+                <div className="mb-8">
+                    <button
+                        onClick={() => setIsFormOpen(!isFormOpen)}
+                        className="w-full bg-white/80 backdrop-blur-sm p-3 rounded-xl 
+                        text-pink-600 hover:bg-white/90 transition-all duration-300
+                        shadow-md hover:shadow-lg text-sm font-medium"
+                    >
+                        {isFormOpen ? "Close ×" : "✨ Write a Confession"}
+                    </button>
+
+                    {isFormOpen && (
+                        <div className="mt-4 bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg">
+                            <textarea
+                                value={newConfession}
+                                onChange={(e) =>
+                                    setNewConfession(e.target.value)
+                                }
+                                className="w-full h-24 p-3 border border-pink-200 rounded-lg mb-3
+                                focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm"
+                                placeholder="Pour your heart out... Your secret is safe with us 💖"
+                            />
+                            <div className="flex justify-end">
+                                <button
+                                    onClick={postConfession}
+                                    disabled={
+                                        isPosting || !newConfession.trim()
+                                    }
+                                    className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 
+                                    text-white rounded-lg text-sm hover:from-pink-600 hover:to-purple-600 
+                                    disabled:opacity-50 transition-all duration-300"
+                                >
+                                    {isPosting ? "Posting..." : "Share 💝"}
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
-                {/* Confessions List */}
-                <div className="space-y-6">
-                    {confessions.map((confession) => (
+                {/* Featured Confessions Grid */}
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    {featuredConfessions.map((confession) => (
                         <div
                             key={confession._id}
-                            className="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-lg 
-                            hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1
-                            border border-pink-50"
+                            className="bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow 
+                            hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                         >
-                            <p className="text-gray-800 text-lg leading-relaxed">
+                            <p className="text-gray-800 text-sm leading-relaxed">
                                 {confession.message}
                             </p>
-                            <div className="mt-4 text-sm text-gray-500 flex items-center">
-                                <svg
-                                    className="w-4 h-4 mr-2"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    ></path>
-                                </svg>
+                            <div className="mt-2 text-xs text-gray-500">
                                 {new Date(
                                     confession.timestamp
-                                ).toLocaleDateString(undefined, {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                })}
+                                ).toLocaleDateString()}
                             </div>
                         </div>
                     ))}
                 </div>
+
+                {/* Scrollable Confessions */}
+                {scrollableConfessions.length > 0 && (
+                    <div className="overflow-x-auto custom-scrollbar -mx-4 px-4">
+                        <div className="flex gap-4 pb-4 min-w-max">
+                            {scrollableConfessions.map((confession) => (
+                                <div
+                                    key={confession._id}
+                                    className="bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow
+                                    hover:shadow-md transition-all duration-300 transform hover:-translate-y-1
+                                    w-72 flex-shrink-0"
+                                >
+                                    <p className="text-gray-800 text-sm leading-relaxed">
+                                        {confession.message}
+                                    </p>
+                                    <div className="mt-2 text-xs text-gray-500">
+                                        {new Date(
+                                            confession.timestamp
+                                        ).toLocaleDateString()}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </section>
     )
