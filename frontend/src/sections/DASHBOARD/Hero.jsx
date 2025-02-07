@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import React from "react"
 import PropTypes from "prop-types"
-
+import Lottie from "lottie-react"
+import loveAnimation from "/public/love.json"
 
 const TimeUnit = ({ value, label }) => (
     <div
@@ -19,29 +20,6 @@ const TimeUnit = ({ value, label }) => (
 TimeUnit.propTypes = {
     value: PropTypes.number.isRequired,
     label: PropTypes.string.isRequired,
-}
-
-const createFallingHearts = () => {
-    const hearts = []
-    for (let i = 0; i < 10; i++) {
-        const startPosition = Math.random() * 100
-        const delay = Math.random() * 5
-        const duration = 6 + Math.random() * 4
-
-        hearts.push(
-            <div
-                key={i}
-                className="absolute text-2xl pointer-events-none animate-falling"
-                style={{
-                    left: `${startPosition}%`,
-                    animation: `falling ${duration}s linear ${delay}s infinite`,
-                }}
-            >
-                💝
-            </div>
-        )
-    }
-    return hearts
 }
 
 const Hero = () => {
@@ -81,11 +59,22 @@ const Hero = () => {
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-pink-400 via-pink-500 to-purple-600 relative overflow-hidden">
-            {createFallingHearts()}
+            {/* Lottie Animation */}
+            <div className="absolute w-full h-full top-0 left-0 pointer-events-none">
+                <Lottie
+                    animationData={loveAnimation}
+                    loop={true}
+                    style={{ width: "100%", height: "100%", opacity: 0.6 }}
+                />
+            </div>
+
             <div className="text-center text-white z-10 p-8 max-w-7xl mx-auto">
                 <h1 className="text-5xl md:text-6xl font-bold mb-8 drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-white to-pink-100">
-                    Your Valentine Awaits... Ready to Match? 💕
+                    MIT-AoE Valentine&apos;s Day 💕
                 </h1>
+                <p className="text-2xl md:text-3xl mb-8 text-white/90">
+                    Your Valentine Awaits... Ready to Match?
+                </p>
 
                 <div className="bg-white/20 backdrop-blur-md p-8 rounded-2xl shadow-lg animate-pulse-slow ring-1 ring-white/50">
                     <p className="text-2xl font-semibold mb-6">
