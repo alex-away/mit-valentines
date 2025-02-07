@@ -7,8 +7,8 @@ const { sendRegsiterMail } = require('../services/mailservices')
 
 exports.registerUser = async (req, res) => {
 
-    const { email, password, firstname, lastname } = req.body
-    console.log(email,password,firstname,lastname);
+    const { email, password, name } = req.body
+    console.log(email,password,name);
     const findUser = await USER_DATA.findOne({ email: email })
     if (findUser) {
         return res.json({ status:200 ,error:'User Exist'})
@@ -17,13 +17,12 @@ exports.registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12)
 
         const createUser = await USER_DATA({
-            First_Name: firstname,
-            Last_Name:lastname,
+            Name: name,
             email: email,
             password: hashedPassword
         })
         await createUser.save()
-    sendRegsiterMail(email,firstname);
+    sendRegsiterMail(email,name);
         return res.json({ status:201, message: 'success' })
 
 
