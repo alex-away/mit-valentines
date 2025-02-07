@@ -10,13 +10,21 @@ const ConfessionWall = () => {
 
     const fetchConfessions = async () => {
         try {
+            console.log("Fetching from:", `${API_URL}/confession/all`) // Debug log
             const response = await fetch(`${API_URL}/confession/all`)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`)
+            }
             const data = await response.json()
             if (data.status === 200) {
                 setConfessions(data.confessions)
             }
         } catch (error) {
-            console.error("Failed to fetch confessions:", error)
+            console.error("Fetch error details:", {
+                message: error.message,
+                apiUrl: API_URL,
+                stack: error.stack,
+            })
         }
     }
 
