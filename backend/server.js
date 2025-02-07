@@ -6,6 +6,7 @@ const cors = require("cors")
 const path = require("path")
 require("dotenv").config()
 const UserRouter = require("./routes/userRoutes")
+const ConfessionRouter = require("./routes/confessionRoutes")
 
 const port = process.env.PORT || 3000
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/user", UserRouter)
+app.use("/confession", ConfessionRouter)
 
 mongoose
     .connect(process.env.MONGODB_URL)
