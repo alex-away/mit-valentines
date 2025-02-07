@@ -15,7 +15,6 @@ const {name_generator_config_boys,name_generator_config_girls} = require('../ser
 
 exports.registerUser = async (req, res) => {
 
-
     const { email, password, name ,gender} = req.body
     console.log(email,password,name,gender);
     const findUser = await USER_DATA.findOne({ email: email })
