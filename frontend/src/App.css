@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+.lottie-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.lottie-container > div {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.animate-floating {
+    animation: floating 3s ease-in-out infinite;
+}
