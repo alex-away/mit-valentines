@@ -26,14 +26,17 @@ UserRouter.get("/get-profile", async (req, res) => {
         if (!user) {
             return res.json({ status: 404, error: "User not found" })
         }
-
+        console.log(user);
         res.json({
             status: 200,
-            username: user.User_Name,
-            hobbies: user.Hobbies || [],
-            gender: user.gender,
-            name: user.Name,
+            user:{
+                name:user.Name,
+                username:user.User_Name,
+                hobbies:user.Hobbies,
+                gender:user.gender
+            }
         })
+
     } catch (error) {
         console.error("Profile fetch error:", error)
         res.status(500).json({
