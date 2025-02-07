@@ -12,7 +12,7 @@ import "./App.css"
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <Hero 
+        <Hero />
         <ConfessionWall />
         <Challenges />
         <Quiz />
