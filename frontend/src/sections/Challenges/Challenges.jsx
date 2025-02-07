@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useRef } from "react"
 
 const Challenges = () => {
-    const [accepted, setAccepted] = useState(false)
     const [dare, setDare] = useState("")
     const [isSpinning, setIsSpinning] = useState(false)
     const [rotation, setRotation] = useState(0)
@@ -20,18 +19,11 @@ const Challenges = () => {
     ]
 
     const getNextSpinResult = (prevIndex) => {
-        // Get a random index that's not the same as the last one
         let newIndex;
         do {
             newIndex = Math.floor(Math.random() * dares.length);
         } while (newIndex === prevIndex);
-        
         return newIndex;
-    }
-
-    const handleAcceptChallenge = () => {
-        setAccepted(true)
-        alert("Challenge Accepted! Post a selfie with your match 💕")
     }
 
     const handleSpinWheel = () => {
@@ -64,6 +56,7 @@ const Challenges = () => {
                     Valentine's Challenges 💝
                 </h2>
 
+                {/* Secret Valentine Section - Centered at Top */}
                 <div className="max-w-2xl mx-auto mb-16">
                     <div className="bg-white p-10 rounded-2xl shadow-2xl hover:shadow-3xl transition duration-300">
                         <h3 className="text-2xl font-semibold mb-6 text-pink-600">
@@ -78,13 +71,13 @@ const Challenges = () => {
                     </div>
                 </div>
 
+                {/* Spin Wheel Section */}
                 <div className="mt-12">
                     <div className="bg-white p-10 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
                         <h3 className="text-3xl font-semibold mb-8 text-pink-600">
                             Spin for Love 💫
                         </h3>
                         <div className="relative">
-
                             <div className="wheel-container mx-auto relative" style={{ width: '500px', height: '500px' }}>
                                 <div 
                                     ref={wheelRef}
@@ -153,6 +146,7 @@ const Challenges = () => {
                     </div>
                 </div>
 
+                {/* Quiz Button */}
                 <button
                     className="mt-12 w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white px-10 py-5 rounded-2xl shadow-2xl hover:opacity-90 transition text-2xl"
                     onClick={() =>
