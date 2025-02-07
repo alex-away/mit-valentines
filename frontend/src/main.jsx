@@ -13,8 +13,8 @@ const Home = () => (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
         <Hero />
         <ConfessionWall />
-        <Quiz />
         <Challenges />
+        <Quiz />
         <ProfileSection isMatched={false} />
     </div>
 )
