@@ -6,7 +6,7 @@ import ConfessionWall from "./sections/ConfessionWall/ConfessionWall.jsx"
 import Challenges from "./sections/Challenges/Challenges.jsx"
 import ProfileSection from "./sections/ProfileSection/ProfileSection.jsx"
 import Quiz from "./sections/Challenges/quiz.jsx"
-import ChallengesTest from "./sections/Challenges/ChallengesTest.jsx"
+import ChallengesTest from "./sections/Challenges/Challenges.jsx"
 import React from "react"
 import "./App.css"
 
@@ -16,7 +16,6 @@ createRoot(document.getElementById("root")).render(
         <ConfessionWall />
         <Challenges />
         <Quiz />
-        <ChallengesTest />
         <ProfileSection />
     </StrictMode>
 )
