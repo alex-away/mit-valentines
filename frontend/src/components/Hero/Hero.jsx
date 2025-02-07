@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import TimeUnit from '../TimeUnit/TimeUnit';
 import FallingHearts from '../FallingHearts/FallingHearts';
 
