@@ -15,7 +15,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173", // Local frontend
-            "https://mit-valentine.vercel.app", // Production frontend
+            "https://mit-valentines.vercel.app", // Production frontend
             "https://mit-valentine-service.vercel.app", // Backend URL (for testing)
         ],
         methods: ["GET", "POST"],
