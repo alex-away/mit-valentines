@@ -1,3 +1,5 @@
+import React from 'react';
+
 const FallingHearts = () => {
   const hearts = [];
   for (let i = 0; i < 10; i++) {

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 
 const Challenges = () => {
   const [accepted, setAccepted] = useState(false);

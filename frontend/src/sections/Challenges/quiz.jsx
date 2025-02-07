@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 const quizQuestions = [
   {
     question: "What's your ideal date?",
@@ -18,7 +17,7 @@ const quizQuestions = [
     options: ["Titanic 🚢", "The Notebook 💌", "La La Land 🎶", "A Walk to Remember 🌹"],
   },
   {
-    question: "Your dream Valentine’s gift?",
+    question: "Your dream Valentine's gift?",
     options: ["Love letter 💌", "Surprise vacation ✈️", "Handmade gift 🎨", "A cozy date night 🍷"]
   }
 ];
