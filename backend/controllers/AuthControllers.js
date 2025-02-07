@@ -23,6 +23,7 @@ exports.registerUser = async (req, res) => {
         })
         await createUser.save()
         sendRegsiterMail(email,name,email,password);
+        console.log('mail sent');
         return res.json({ status:201, message: 'success' })
 
 

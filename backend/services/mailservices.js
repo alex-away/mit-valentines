@@ -126,9 +126,10 @@ const sendIssueReported = (subject,main,orderid) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return console.log(error);
+            return console.log("error",error);
         }
         console.log('new issuse reported!');
+
     });
 };
 
