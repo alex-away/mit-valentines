@@ -14,7 +14,7 @@ UserRouter.post("/register", registerUser)
 UserRouter.post("/login", loginUser)
 UserRouter.post("/update-hobbies", updateHobbies)
 UserRouter.get("/find-match", findMatch)
-UserRouter.get("/all-users", allusers)
+// UserRouter.get("/all-users", allusers)
 UserRouter.get("/get-profile", async (req, res) => {
     try {
         const { token } = req.headers
@@ -29,7 +29,7 @@ UserRouter.get("/get-profile", async (req, res) => {
         if (!user) {
             return res.json({ status: 404, error: "User not found" })
         }
-        console.log(user);
+        // console.log(user);
         res.json({
             status: 200,
             user:{
