@@ -43,9 +43,8 @@ const LoginForm = () => {
 
             // Store both userId and token in localStorage
             // localStorage.setItem("userId", data.userId)
-            localStorage.setItem('token', data.token)
-            localStorage.setItem('user', JSON.stringify(data.user))
-
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("user", JSON.stringify(data.user))
 
             console.log("Logged in successfully")
 
@@ -69,7 +68,7 @@ const LoginForm = () => {
                     <div className="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:scale-[1.02]">
                         <div className="text-center mb-8">
                             <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                                Welcome Back! ❤️
+                                Welcome Darling! ❤️
                             </h2>
                             <p className="text-gray-600">
                                 Sign in to find your valentine
@@ -137,13 +136,7 @@ const LoginForm = () => {
 
                             <div className="text-center mt-4">
                                 <p className="text-sm text-gray-600">
-                                    Don't have an account?{" "}
-                                    <button
-                                        onClick={() => navigate("/signup")}
-                                        className="text-pink-600 hover:text-pink-700 font-medium"
-                                    >
-                                        Sign up
-                                    </button>
+                                    Check Your Email for login credentials
                                 </p>
                             </div>
                         </form>

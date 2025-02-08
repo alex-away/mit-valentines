@@ -72,17 +72,16 @@ const Hero = () => {
                 "https://mit-valentines.onrender.com/user/get-profile",
                 {
                     headers: {
-                        'Content-type':'application/json',
-                        token:token
+                        "Content-type": "application/json",
+                        token: token,
                     },
                 }
             )
 
-
             const data = await response.json()
             if (data.status == 200) {
                 setUser(data.user)
-                console.log(data.user);
+                console.log(data.user)
             }
         } catch (error) {
             console.error("Error fetching user:", error)
@@ -99,9 +98,9 @@ const Hero = () => {
     }
 
     return (
-        <div className="relative min-h-screen bg-gradient-to-br from-pink-400 via-pink-500 to-purple-600">
+        <div className="relative min-h-screen bg-gradient-to-br from-pink-400 via-pink-500 to-purple-600 flex flex-col">
             {/* Auth Button with improved styling */}
-            <div className="absolute top-6 right-6 z-50">
+            <div className="pt-4 px-4 z-50 items-end flex justify-end">
                 {user ? (
                     <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20">
                         <span className="text-white font-medium">
@@ -155,12 +154,18 @@ const Hero = () => {
                         <div className="flex flex-wrap justify-center gap-6">
                             <TimeUnit value={timeLeft.days} label="Days" />
                             <TimeUnit value={timeLeft.hours} label="Hours" />
-                            <TimeUnit value={timeLeft.minutes} label="Minutes" />
-                            <TimeUnit value={timeLeft.seconds} label="Seconds" />
+                            <TimeUnit
+                                value={timeLeft.minutes}
+                                label="Minutes"
+                            />
+                            <TimeUnit
+                                value={timeLeft.seconds}
+                                label="Seconds"
+                            />
                         </div>
                     </div>
 
-                    <button 
+                    <button
                         className="mt-8 px-8 py-4 text-2xl bg-white text-pink-500 rounded-full 
               shadow-lg transform transition-all duration-300 hover:-translate-y-1 
               hover:shadow-xl active:translate-y-0 focus:outline-none focus:ring-2 
