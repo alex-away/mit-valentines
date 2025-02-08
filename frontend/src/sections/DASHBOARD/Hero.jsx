@@ -160,7 +160,7 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    <button
+                    <button 
                         className="mt-8 px-8 py-4 text-2xl bg-white text-pink-500 rounded-full 
               shadow-lg transform transition-all duration-300 hover:-translate-y-1 
               hover:shadow-xl active:translate-y-0 focus:outline-none focus:ring-2 
