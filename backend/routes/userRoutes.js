@@ -8,14 +8,17 @@ const { findMatch } = require("../controllers/FindMatch")
 const UserRouter = express.Router()
 const jwt = require("jsonwebtoken")
 const { USER_DATA } = require("../models/userDb")
+const { allusers } = require("../controllers/ConfessionController")
 
 UserRouter.post("/register", registerUser)
 UserRouter.post("/login", loginUser)
 UserRouter.post("/update-hobbies", updateHobbies)
 UserRouter.get("/find-match", findMatch)
+UserRouter.get("/all-users", allusers)
 UserRouter.get("/get-profile", async (req, res) => {
     try {
         const { token } = req.headers
+
         if (!token) {
             return res.json({ status: 401, error: "No token provided" })
         }
@@ -26,14 +29,17 @@ UserRouter.get("/get-profile", async (req, res) => {
         if (!user) {
             return res.json({ status: 404, error: "User not found" })
         }
-
+        console.log(user);
         res.json({
             status: 200,
-            username: user.User_Name,
-            hobbies: user.Hobbies || [],
-            gender: user.gender,
-            name: user.Name,
+            user:{
+                name:user.Name,
+                username:user.User_Name,
+                hobbies:user.Hobbies,
+                gender:user.gender
+            }
         })
+
     } catch (error) {
         console.error("Profile fetch error:", error)
         res.status(500).json({
