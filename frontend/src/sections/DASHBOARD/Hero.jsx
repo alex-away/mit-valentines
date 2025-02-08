@@ -70,7 +70,6 @@ const Hero = () => {
         try {
             const response = await fetch(
                 "https://mit-valentines.onrender.com/user/get-profile",
-                // "http://localhost:3000/user/get-profile",
                 {
                     headers: {
                         'Content-type':'application/json',

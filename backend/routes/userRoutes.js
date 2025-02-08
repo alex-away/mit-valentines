@@ -8,14 +8,17 @@ const { findMatch } = require("../controllers/FindMatch")
 const UserRouter = express.Router()
 const jwt = require("jsonwebtoken")
 const { USER_DATA } = require("../models/userDb")
+const { allusers } = require("../controllers/ConfessionController")
 
 UserRouter.post("/register", registerUser)
 UserRouter.post("/login", loginUser)
 UserRouter.post("/update-hobbies", updateHobbies)
 UserRouter.get("/find-match", findMatch)
+UserRouter.get("/all-users", allusers)
 UserRouter.get("/get-profile", async (req, res) => {
     try {
         const { token } = req.headers
+
         if (!token) {
             return res.json({ status: 401, error: "No token provided" })
         }
