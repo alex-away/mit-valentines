@@ -72,24 +72,21 @@ const Hero = () => {
                 "https://mit-valentines.onrender.com/user/get-profile",
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        'Content-type':'application/json',
+                        token:token
                     },
                 }
             )
+
+
             const data = await response.json()
-            if (data.status === 200) {
-                setUser({
-                    username: data.username || "User",
-                    hobbies: data.hobbies || [],
-                    gender: data.gender
-                })
-            } else {
-                // If token is invalid, clear it
-                localStorage.removeItem("token")
-                localStorage.removeItem("userId")
+            if (data.status == 200) {
+                setUser(data.user)
+                console.log(data.user);
             }
         } catch (error) {
             console.error("Error fetching user:", error)
+
             localStorage.removeItem("token")
             localStorage.removeItem("userId")
         }
@@ -97,7 +94,6 @@ const Hero = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token")
-        localStorage.removeItem("userId")
         setUser(null)
         navigate("/login")
     }
@@ -109,7 +105,7 @@ const Hero = () => {
                 {user ? (
                     <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl border border-white/20">
                         <span className="text-white font-medium">
-                            Hi, {user.username} 👋
+                            Hi, {user.name} 👋
                         </span>
                         <button
                             onClick={handleLogout}

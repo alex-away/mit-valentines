@@ -24,7 +24,8 @@ const LoginForm = () => {
 
         try {
             const response = await fetch(
-                "https://mit-valentines.onrender.com/user/login",
+                // "https://mit-valentines.onrender.com/user/login",
+                "http://localhost:3000/user/login",
                 {
                     method: "POST",
                     headers: {
@@ -36,19 +37,15 @@ const LoginForm = () => {
 
             const data = await response.json()
 
-            if (!response.ok) {
+            if (data.status !== 200) {
                 throw new Error(data.message || "Login failed")
             }
 
             // Store both userId and token in localStorage
-            localStorage.setItem("userId", data.userId)
-            localStorage.setItem("token", data.token)
+            // localStorage.setItem("userId", data.userId)
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('user', JSON.stringify(data.user))
 
-            // Set the token in Authorization header for future requests
-            if (data.token) {
-                localStorage.setItem("token", data.token)
-                // You can set up an axios instance with the token here if using axios
-            }
 
             console.log("Logged in successfully")
 
