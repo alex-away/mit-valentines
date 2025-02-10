@@ -10,7 +10,8 @@ const USER_LOGIN_DATA = new mongoose.Schema({
         type: [String],  // Array of strings to store multiple hobbies
         default: []      // Default empty array if no hobbies are specified
     },
-    // Hobbies:Array[]
+    totalVotesReceived: { type: Number, default: 0 },
+    hasVoted: { type: Boolean, default: false }
 },
 {
         collection: 'USER_DATA'

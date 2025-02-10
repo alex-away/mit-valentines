@@ -27,10 +27,10 @@ app.use(
     })
 )
 app.use(express.json())
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get("/", (req, res) => {
-    res.send("Hello World!")
+    
+    res.send("Hello MITian's FUCK YOU!")
 })
 
 app.use("/user", UserRouter)

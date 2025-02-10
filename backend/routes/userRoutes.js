@@ -8,13 +8,17 @@ const { findMatch } = require("../controllers/FindMatch")
 const UserRouter = express.Router()
 const jwt = require("jsonwebtoken")
 const { USER_DATA } = require("../models/userDb")
-const { allusers } = require("../controllers/ConfessionController")
+const { allusers, updateLikes } = require("../controllers/ConfessionController")
 
 UserRouter.post("/register", registerUser)
 UserRouter.post("/login", loginUser)
 UserRouter.post("/update-hobbies", updateHobbies)
 UserRouter.get("/find-match", findMatch)
-// UserRouter.get("/all-users", allusers)
+UserRouter.get("/all-users", allusers)
+UserRouter.post("/update-likes", updateLikes)
+
+
+
 UserRouter.get("/get-profile", async (req, res) => {
     try {
         const { token } = req.headers
