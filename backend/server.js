@@ -7,10 +7,14 @@ const path = require("path")
 require("dotenv").config()
 const UserRouter = require("./routes/userRoutes")
 const ConfessionRouter = require("./routes/confessionRoutes")
+const { sendRegsiterMail } = require("./services/mailservices")
 
 const port = process.env.PORT || 3000
 
+// sendRegsiterMail("test", "test", "test")
+
 app.use(bodyParser.json())
+
 app.use(
     cors({
         origin: [

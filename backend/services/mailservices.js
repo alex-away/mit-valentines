@@ -15,78 +15,107 @@ const transporter = nodemailer.createTransport({
 const sendRegsiterMail = async (to, name, username, password) => {
     const subject = 'Welcome to MIT-Valentine - Where Hearts Connect! 💝';
     const html = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h1 style="color: #ff4b8d;">MIT-Valentine</h1>
-                <p style="font-size: 18px; color: #666;">Where College Connections Bloom 💕</p>
-            </div>
-            <div style="background-color: #fff9f9; padding: 25px; border-radius: 10px; border: 1px solid #ffe6e6;">
-                <p style="font-size: 16px; line-height: 1.6;">Dear ${name},</p>
-                <p style="font-size: 16px; line-height: 1.6;">
-                    Welcome to MIT-Valentine! 🌹 We're absolutely delighted to have you join our special community where meaningful connections begin.
-                </p>
-                <p style="font-size: 16px; line-height: 1.6;">
-                    Get ready to embark on a heartwarming journey where you might just find that special someone who makes your college life even more memorable. Whether you're looking for a romantic connection or a meaningful friendship, MIT-Valentine is here to make your experience magical.
-                </p>
-                <p style="font-size: 16px; line-height: 1.6;">
-                    Our platform is designed with care to help you connect with like-minded individuals who share your interests, values, and dreams. Remember, every great love story starts with a simple hello! 
-                </p>
-                
-                <div style="background-color: #fff0f5; padding: 20px; border-radius: 8px; margin-top: 25px; border: 2px dashed #ff4b8d;">
-                    <h3 style="color: #ff4b8d; margin-bottom: 15px; text-align: center;">Your Portal to Romance</h3>
-                    <div style="background-color: white; padding: 15px; border-radius: 6px; margin-bottom: 10px;">
-                        <p style="margin: 5px 0; font-size: 15px;"><strong>Username:</strong> ${username}</p>
-                    </div>
-                    <div style="background-color: white; padding: 15px; border-radius: 6px;">
-                        <p style="margin: 5px 0; font-size: 15px;"><strong>Password:</strong> ${password}</p>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to MIT-Valentine</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 600px; margin: 0 auto;">
+        <tr>
+            <td style="padding: 20px; background-color: #ffffff;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <!-- Header -->
+                    <tr>
+                        <td style="text-align: center; padding-bottom: 20px;">
+                            <h1 style="color: #ff4b8d; margin: 0;">MIT-Valentine</h1>
+                            <p style="font-size: 18px; color: #666; margin: 10px 0;">Where College Connections Bloom 💕</p>
+                        </td>
+                    </tr>
 
-                <div style="text-align: center; margin-top: 35px;">
-                    <p style="font-size: 16px; line-height: 1.6; color: #666;">
-                        Your perfect match could be just a click away! Join us in creating beautiful connections and unforgettable moments. 💫
-                    </p>
-                    <a href="${process.env.FRONTEND_URL+"/login"}" 
-                       style="display: inline-block; 
-                              background: linear-gradient(45deg, #ff4b8d, #ff6b6b);
-                              color: white;
-                              padding: 15px 35px;
-                              text-decoration: none;
-                              border-radius: 25px;
-                              font-size: 16px;
-                              font-weight: bold;
-                              margin: 20px 0;
-                              box-shadow: 0 4px 15px rgba(255, 75, 141, 0.2);
-                              transition: transform 0.3s ease;">
-                        Start Your Journey ✨
-                    </a>
-                </div>
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="background-color: #fff9f9; padding: 25px; border-radius: 10px; border: 1px solid #ffe6e6;">
+                            <p style="font-size: 16px; line-height: 1.6; margin: 0 0 15px 0;">Dear ${name},</p>
+                            <p style="font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                                Welcome to MIT-Valentine! 💝 They say the best love stories start in college, and yours is about to begin. Your perfect match could be just one click away - let the magic begin! ✨
+                            </p>
 
-                <div style="text-align: center; margin-top: 30px; font-style: italic;">
-                    <p style="font-size: 16px; color: #666;">
-                        "Every great love story is beautiful, but ours could be extraordinary!"
-                    </p>
-                    <p style="font-size: 16px; color: #ff4b8d; font-weight: bold; margin-top: 20px;">
-                        With love and excitement,<br>
-                        Team MIT-Valentine 💝
-                    </p>
-                </div>
-            </div>
-        </div>`;
+                            <!-- Credentials Box -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fff0f5; border-radius: 8px; margin: 20px 0;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <h3 style="color: #ff4b8d; margin: 0 0 15px 0; text-align: center;">Your Login Details</h3>
+                                        <div style="background-color: white; padding: 15px; border-radius: 6px; margin-bottom: 10px;">
+                                            <p style="margin: 5px 0; font-size: 15px;"><strong>Username:</strong> ${username}</p>
+                                        </div>
+                                        <div style="background-color: white; padding: 15px; border-radius: 6px;">
+                                            <p style="margin: 5px 0; font-size: 15px;"><strong>Password:</strong> ${password}</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- CTA Button -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tr>
+                                    <td style="padding: 20px; text-align: center;">
+                                        <a href="${process.env.FRONTEND_URL}/login" 
+                                           style="display: inline-block; 
+                                                  background: linear-gradient(45deg, #ff4b8d, #ff6b6b);
+                                                  color: white;
+                                                  padding: 15px 35px;
+                                                  text-decoration: none;
+                                                  border-radius: 25px;
+                                                  font-size: 16px;
+                                                  font-weight: bold;">
+                                            Start Your Journey ✨
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Footer Quote -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tr>
+                                    <td style="text-align: center; padding-top: 20px;">
+                                        <p style="font-size: 16px; color: #666; font-style: italic; margin: 0 0 15px 0;">
+                                            "Every great love story is beautiful, but ours could be extraordinary!"
+                                        </p>
+                                        <p style="font-size: 16px; color: #ff4b8d; font-weight: bold; margin: 0;">
+                                            With love and excitement,<br>
+                                            Team MIT-Valentine 💝
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>`;
 
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: {
+            name: 'MIT-Valentine',
+            address: process.env.EMAIL_USER
+        },
         to: to,
         subject: subject,
         html: html
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log("err",error);
-        }
+    try {
+        await transporter.sendMail(mailOptions);
         console.log('Welcome email sent successfully');
-    });
+    } catch (error) {
+        console.log("Email sending error:", error);
+    }
 };
 
 

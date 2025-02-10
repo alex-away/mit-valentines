@@ -51,7 +51,9 @@ const Challenges = () => {
 
     return (
         <section className="py-12 px-4 md:px-0">
+        <section className="py-12 px-4 md:px-0">
             <div className="max-w-6xl mx-auto text-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">
                 <h2 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">
                     Valentine's Challenges 💝
                 </h2>
@@ -71,6 +73,7 @@ const Challenges = () => {
                             Send an anonymous valentine message to your crush!
                         </p>
                         <button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl hover:opacity-90 transition text-lg md:text-xl">
+                        <button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl hover:opacity-90 transition text-lg md:text-xl">
                             Send Secret Valentine
                         </button>
                     </div>
@@ -80,8 +83,13 @@ const Challenges = () => {
                 <div className="mt-8 md:mt-12">
                     <div className="bg-white p-6 md:p-10 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
                         <h3 className="text-2xl md:text-3xl font-semibold mb-6 md:mb-8 text-pink-600">
+                <div className="mt-8 md:mt-12">
+                    <div className="bg-white p-6 md:p-10 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 className="text-2xl md:text-3xl font-semibold mb-6 md:mb-8 text-pink-600">
                             Spin for Love 💫
                         </h3>
+                        <div className="relative flex justify-center items-center">
+                            <div className="wheel-container relative">
                         <div className="relative flex justify-center items-center">
                             <div className="wheel-container relative">
                                 <div 
@@ -157,6 +165,10 @@ const Challenges = () => {
                     text-white px-6 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl hover:opacity-90 
                     transition text-lg md:text-2xl block"
                     onClick={() => alert("Redirecting to quiz page... (You can link this to /quiz)")}
+                    className="mt-8 md:mt-12 w-full max-w-sm md:max-w-none mx-auto bg-gradient-to-r from-pink-500 to-purple-500 
+                    text-white px-6 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl hover:opacity-90 
+                    transition text-lg md:text-2xl block"
+                    onClick={() => alert("Redirecting to quiz page... (You can link this to /quiz)")}
                 >
                     💖 What Kind of Lover Are You? - Take the Quiz!
                 </button>
@@ -188,6 +200,57 @@ const Challenges = () => {
                 }
                 .wheel:not(.spinning) {
                     animation: glow 3s infinite;
+                }
+
+                /* Mobile-specific styles */
+                @media (max-width: 768px) {
+                    .wheel-container {
+                        width: 300px !important;
+                        height: 300px !important;
+                        transform: scale(0.9);
+                        margin: 0 auto;
+                    }
+
+                    .pointer-container {
+                        width: 25px !important;
+                        height: 25px !important;
+                    }
+
+                    .pointer {
+                        border-left: 15px solid transparent !important;
+                        border-right: 15px solid transparent !important;
+                        border-top: 25px solid rgb(236, 72, 153) !important;
+                    }
+
+                    /* Center icons and text for mobile */
+                    .wheel-icon {
+                        right: 8px !important;
+                    }
+
+                    .wheel-icon span {
+                        font-size: 1.25rem !important;
+                    }
+
+                    /* Center spin button for mobile */
+                    .spin-button {
+                        width: 70px !important;
+                        height: 70px !important;
+                        font-size: 0.875rem !important;
+                    }
+
+                    /* Center dare result for mobile */
+                    .dare-result {
+                        max-width: 90%;
+                        margin: 1rem auto 0;
+                    }
+                }
+
+                /* Keep desktop styles unchanged */
+                @media (min-width: 769px) {
+                    .wheel-container {
+                        width: 500px;
+                        height: 500px;
+                    }
                 }
 
                 /* Mobile-specific styles */

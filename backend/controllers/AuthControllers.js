@@ -49,14 +49,18 @@ exports.loginUser = async (req,res)=>{
         const isPassowrdcValid = await bcrypt.compare(password,findUser.password)
 
         if(!isPassowrdcValid) return  res.json({status:401,error:'Password Incorrect'})
-        
+        // console.log(findUser);
         const token = jwt.sign({ userId: findUser._id , email:findUser.email,names:findUser.username},process.env.JWT_KEY,
             { expiresIn:'1h'})
             const data={
-                username:findUser.username,
+                username:findUser.User_Name,
                 email:findUser.email,
-                name:findUser.name
+                name:findUser.Name,
+                gender:findUser.gender
             }
+
+
+            // console.log(data);
         return res.json({status:200,message:'success',token:token,user:data})
         
 
