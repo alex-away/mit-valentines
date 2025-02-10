@@ -22,7 +22,7 @@ const MatchFinder = () => {
                 "https://mit-valentines.onrender.com/user/get-profile",
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        token: token,
                     },
                 }
             )
@@ -54,16 +54,19 @@ const MatchFinder = () => {
                 "https://mit-valentines.onrender.com/user/get-profile",
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                       token: token,
                     },
                 }
             )
-            const profileData = await profileResponse.json()
 
-            if (!profileData.hobbies || profileData.hobbies.length === 0) {
+            const profileData = await profileResponse.json()
+            console.log(profileData.user.hobbies)
+            if (!profileData.user.hobbies || profileData.user.hobbies.length == 0) {
+                console.log("No hobbies found")
                 setError(
                     "Please select your hobbies first! Scroll down to add them 💕"
                 )
+
                 document.querySelector("#hobbies-section")?.scrollIntoView({
                     behavior: "smooth",
                     block: "center",
@@ -77,7 +80,7 @@ const MatchFinder = () => {
                 "https://mit-valentines.onrender.com/user/find-match",
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        token: token,
                     },
                 }
             )

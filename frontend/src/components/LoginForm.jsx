@@ -25,6 +25,7 @@ const LoginForm = () => {
         try {
             const response = await fetch(
                 "https://mit-valentines.onrender.com/user/login",
+                // "http://localhost:3000/user/login",
                 {
                     method: "POST",
                     headers: {
@@ -36,19 +37,14 @@ const LoginForm = () => {
 
             const data = await response.json()
 
-            if (!response.ok) {
+            if (data.status !== 200) {
                 throw new Error(data.message || "Login failed")
             }
 
             // Store both userId and token in localStorage
-            localStorage.setItem("userId", data.userId)
+            // localStorage.setItem("userId", data.userId)
             localStorage.setItem("token", data.token)
-
-            // Set the token in Authorization header for future requests
-            if (data.token) {
-                localStorage.setItem("token", data.token)
-                // You can set up an axios instance with the token here if using axios
-            }
+            localStorage.setItem("user", JSON.stringify(data.user))
 
             console.log("Logged in successfully")
 
@@ -72,7 +68,7 @@ const LoginForm = () => {
                     <div className="bg-white rounded-2xl shadow-xl p-8 transform transition-all hover:scale-[1.02]">
                         <div className="text-center mb-8">
                             <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                                Welcome Back! ❤️
+                                Welcome Darling! ❤️
                             </h2>
                             <p className="text-gray-600">
                                 Sign in to find your valentine
@@ -140,16 +136,22 @@ const LoginForm = () => {
 
                             <div className="text-center mt-4">
                                 <p className="text-sm text-gray-600">
-                                    Don't have an account?{" "}
-                                    <button
-                                        onClick={() => navigate("/signup")}
-                                        className="text-pink-600 hover:text-pink-700 font-medium"
-                                    >
-                                        Sign up
-                                    </button>
+                                    Check Your Email for login credentials
                                 </p>
                             </div>
                         </form>
+
+                        <div className="mt-8 text-center">
+                            <button
+                                onClick={() => navigate('/')}
+                                className="px-6 py-2.5 text-pink-500 text-sm font-medium
+                                border border-pink-200 rounded-full transition-all duration-300
+                                hover:bg-pink-50 hover:border-pink-300 hover:text-pink-600
+                                active:scale-[0.98]"
+                            >
+                                Go to Home 💝
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
