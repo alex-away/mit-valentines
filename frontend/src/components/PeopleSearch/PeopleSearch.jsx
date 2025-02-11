@@ -11,8 +11,6 @@ const PeopleSearch = () => {
   const [votedUser, setVotedUser] = useState(null);
   const [error, setError] = useState("");
   const [showVotePopup, setShowVotePopup] = useState(true);
-  const TOP_USERS_COUNT = 4; // Number of top voted users to show
-  const [valentineResults, setValentineResults] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -35,13 +33,18 @@ const PeopleSearch = () => {
       const data = await response.json();
       
       if (data.status === 200 && Array.isArray(data.users)) {
-        // Sort users by votes received
-        const sortedUsers = data.users
-          .filter(user => user && user.Name && user.User_Name) // Ensure valid user data
-          .sort((a, b) => (b.totalVotesReceived || 0) - (a.totalVotesReceived || 0));
+        // Filter valid users and shuffle them randomly
+        const validUsers = data.users
+          .filter(user => user && user.Name && user.User_Name);
         
-        setUsers(sortedUsers);
-        console.log("Fetched users:", sortedUsers); // Debug log
+        // Fisher-Yates shuffle algorithm
+        const shuffledUsers = [...validUsers];
+        for (let i = shuffledUsers.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledUsers[i], shuffledUsers[j]] = [shuffledUsers[j], shuffledUsers[i]];
+        }
+        
+        setUsers(shuffledUsers);
       } else {
         console.error("Invalid user data received:", data);
         setError("Failed to load users data properly");
@@ -104,14 +107,13 @@ const PeopleSearch = () => {
           user.User_Name?.toLowerCase(),     // Username
           user.gender?.toLowerCase(),        // Gender
           user.Hobbies?.join(' ').toLowerCase(), // All hobbies combined
-        ].filter(Boolean); // Remove any undefined values
+        ].filter(Boolean);
 
-        // Return true if any field matches the search term
         return searchFields.some(field => field.includes(searchTerm));
       });
     }
-    // If no search, show only top voted users
-    return users.slice(0, TOP_USERS_COUNT);
+    // If no search, show only 4 random users
+    return users.slice(0, 4);
   };
 
   const scrollToVoting = () => {
@@ -121,33 +123,6 @@ const PeopleSearch = () => {
       setShowVotePopup(false);
     }
   };
-
-  const fetchValentineResults = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response = await fetch("https://mit-valentines.onrender.com/user/valentine-results", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      
-      if (data.status === 200) {
-        setValentineResults(data.results);
-      } else if (data.status === 403) {
-        // Not Valentine's Day yet
-        console.log(data.error);
-      }
-    } catch (err) {
-      console.error("Error fetching valentine results:", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchValentineResults();
-  }, []);
 
   return (
     <>
@@ -219,7 +194,7 @@ const PeopleSearch = () => {
           <input
             type="text"
             className="w-full p-3 border border-white/40 rounded-2xl mt-4 text-lg shadow-lg bg-white/20 backdrop-blur-md focus:ring-2 focus:ring-pink-400 transition-all outline-none text-gray-900"
-            placeholder="🔍 Search for your Crush..."
+            placeholder="🔍 Search by name, username, or interests..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -230,7 +205,7 @@ const PeopleSearch = () => {
             </p>
           ) : (
             <p className="text-center text-gray-600 mt-4 italic">
-               Search to find others! ✨
+              Showing random suggestions. Search to find more! ✨
             </p>
           )}
 
@@ -270,42 +245,6 @@ const PeopleSearch = () => {
           </div>
         </div>
       </section>
-
-      {valentineResults && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-            <h3 className="text-2xl font-bold text-pink-600 mb-4">
-              Valentine's Results 💝
-            </h3>
-            {valentineResults.youVotedFor && (
-              <div className="mb-4">
-                <p className="font-medium text-gray-700">You voted for:</p>
-                <p className="text-pink-600">{valentineResults.youVotedFor.name}</p>
-              </div>
-            )}
-            {valentineResults.votedForYou.length > 0 && (
-              <div>
-                <p className="font-medium text-gray-700">
-                  These people voted for you:
-                </p>
-                <ul className="mt-2 space-y-2">
-                  {valentineResults.votedForYou.map((admirer, index) => (
-                    <li key={index} className="text-pink-600">
-                      {admirer.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <button
-              onClick={() => setValentineResults(null)}
-              className="mt-4 w-full bg-pink-500 text-white rounded-lg py-2 hover:bg-pink-600 transition-colors"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };
