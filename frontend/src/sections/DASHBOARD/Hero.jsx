@@ -12,6 +12,13 @@ const scrollToHobbiesForm = () => {
     }
 }
 
+const scrollToVoting = () => {
+    const votingSection = document.getElementById('voting-section');
+    if (votingSection) {
+        votingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+};
+
 const TimeUnit = ({ value, label }) => (
     <div
         className="bg-white/30 p-6 rounded-xl min-w-[140px] flex flex-col items-center 
@@ -173,15 +180,33 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    <button
-                        className="mt-8 px-8 py-4 text-2xl bg-white text-pink-500 rounded-full 
-              shadow-lg transform transition-all duration-300 hover:-translate-y-1 
-              hover:shadow-xl active:translate-y-0 focus:outline-none focus:ring-2 
-              focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-500"
-                        onClick={() => scrollToHobbiesForm()}
-                    >
-                        💘 Get Matched Now!
-                    </button>
+                    <div className="mt-8 flex flex-col md:flex-row justify-center gap-4 md:gap-6">
+                        <button
+                            onClick={() => scrollToHobbiesForm()}
+                            className="px-8 py-4 text-2xl bg-white text-pink-500 rounded-full 
+                            shadow-lg transform transition-all duration-300 hover:-translate-y-1 
+                            hover:shadow-xl active:translate-y-0 focus:outline-none focus:ring-2 
+                            focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-500
+                            order-1 md:order-none"
+                        >
+                            💘 Get Matched Now!
+                        </button>
+
+                        <button
+                            onClick={scrollToVoting}
+                            className="px-8 py-4 text-2xl bg-white text-pink-500 rounded-full 
+                            shadow-lg transform transition-all duration-300 hover:-translate-y-1 
+                            hover:shadow-xl active:translate-y-0 focus:outline-none focus:ring-2 
+                            focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-500
+                            order-2 md:order-none"
+                        >
+                            ❤️ Vote Now!
+                        </button>
+                    </div>
+
+                    <p className="mt-4 text-sm text-white/70 md:hidden">
+                        Scroll down to explore more features ↓
+                    </p>
                 </div>
             </div>
         </div>
