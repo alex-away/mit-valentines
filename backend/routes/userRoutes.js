@@ -16,8 +16,7 @@ UserRouter.post("/update-hobbies", updateHobbies)
 UserRouter.get("/find-match", findMatch)
 UserRouter.get("/all-users", allusers)
 UserRouter.post("/update-likes", updateLikes)
-
-
+UserRouter.get("/valentine-results", ConfessionController.getValentineResults)
 
 UserRouter.get("/get-profile", async (req, res) => {
     try {

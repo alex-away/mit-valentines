@@ -10,13 +10,17 @@ import Quiz from "./sections/Challenges/quiz.jsx"
 import LoginForm from "./components/LoginForm"
 import MatchFinder from "./components/MatchFinder/MatchFinder"
 import HobbiesForm from "./components/HobbiesForm/HobbiesForm"
+import PeopleSearch from "./components/PeopleSearch/PeopleSearch.jsx"
 
 const Home = () => (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
         <Hero />
-        <ConfessionWall />
+
+        <ConfessionWall  />
+        <PeopleSearch />
         <Challenges />
         <Quiz />
+        
 
         {/* Bottom Section with Match and Hobbies */}
         <div className="bg-gradient-to-br from-pink-100/50 to-purple-100/50 py-16">
