@@ -56,26 +56,6 @@ const Challenges = () => {
                     Valentine's Challenges 💝
                 </h2>
 
-                {/* Secret Valentine Section */}
-                <div className="w-full md:max-w-2xl mx-auto mb-8 md:mb-16">
-                    <div className="bg-white p-6 md:p-10 rounded-2xl shadow-2xl hover:shadow-3xl transition duration-300 text-center">
-                        <div className="flex items-center justify-between mb-4 md:mb-6 relative">
-                            <h3 className="text-xl md:text-2xl font-semibold text-pink-600 w-full">
-                                Secret Valentine 💌
-                            </h3>
-                            <span className="px-2 py-1 text-xs font-medium bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full absolute right-0">
-                                BETA
-                            </span>
-                        </div>
-                        <p className="text-gray-600 mb-4 md:mb-6 text-base md:text-lg">
-                            Send an anonymous valentine message to your crush!
-                        </p>
-                        <button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl hover:opacity-90 transition text-lg md:text-xl">
-                            Send Secret Valentine
-                        </button>
-                    </div>
-                </div>
-
                 {/* Spin Wheel Section */}
                 <div className="mt-8 md:mt-12">
                     <div className="bg-white p-6 md:p-10 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
