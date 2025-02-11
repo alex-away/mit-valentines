@@ -61,41 +61,39 @@ exports.updateLikes = async (req, res) => {
         const token = bearerHeader.split(' ')[1];
         const { userId } = jwt.verify(token, process.env.JWT_KEY);
         
-        // First check if user exists and hasn't voted
-        const user = await USER_DATA.findOne({ _id: userId });
-        if (!user) {
+        // Find voter and target users
+        const voter = await USER_DATA.findOne({ _id: userId });
+        const target = await USER_DATA.findOne({ email: confessionEmail });
+        
+        if (!voter || !target) {
             return res.json({ status: 404, error: "User not found" });
         }
-        if (user.hasVoted) {
+        if (voter.hasVoted) {
             return res.json({ status: 400, error: "You have already voted" });
         }
 
-        // First update the voter's status
+        // Update voter's status with vote details
         const voterUpdate = await USER_DATA.findOneAndUpdate(
             { _id: userId },
-            { $set: { hasVoted: true } },
+            { 
+                $set: { 
+                    hasVoted: true,
+                    valentineVote: {
+                        votedFor: target._id,
+                        votedAt: new Date(),
+                        revealed: false
+                    }
+                } 
+            },
             { new: true }
         );
 
-        if (!voterUpdate) {
-            return res.json({ status: 404, error: "Failed to update voter status" });
-        }
-
-        // Then update the target's votes
+        // Update target's vote count
         const targetUpdate = await USER_DATA.findOneAndUpdate(
             { email: confessionEmail },
             { $inc: { totalVotesReceived: 1 } },
             { new: true }
         );
-
-        if (!targetUpdate) {
-            // Rollback the voter's status if target update fails
-            await USER_DATA.findOneAndUpdate(
-                { _id: userId },
-                { $set: { hasVoted: false } }
-            );
-            return res.json({ status: 404, error: "Target user not found" });
-        }
 
         return res.json({ 
             status: 200, 
@@ -104,6 +102,59 @@ exports.updateLikes = async (req, res) => {
     } catch (error) {
         console.error("err", error);
         return res.json({ status: 500, error: 'Failed to update likes' });
+    }
+}
+
+// Add new endpoint to get valentine results
+exports.getValentineResults = async (req, res) => {
+    const bearerHeader = req.headers.authorization;
+    if (!bearerHeader) {
+        return res.json({ status: 401, error: "No authorization token provided" });
+    }
+
+    try {
+        const token = bearerHeader.split(' ')[1];
+        const { userId } = jwt.verify(token, process.env.JWT_KEY);
+
+        // Check if it's Valentine's Day
+        const now = new Date();
+        const valentinesDay = new Date('2024-02-14T00:00:00Z');
+        
+        if (now < valentinesDay) {
+            return res.json({ 
+                status: 403, 
+                error: "Results will be revealed on Valentine's Day!" 
+            });
+        }
+
+        // Get user's vote information
+        const user = await USER_DATA.findOne({ _id: userId })
+            .populate('valentineVote.votedFor', 'Name User_Name email');
+
+        // Get users who voted for this user
+        const admirers = await USER_DATA.find({ 
+            'valentineVote.votedFor': userId,
+            'valentineVote.revealed': false 
+        }, 'Name User_Name email');
+
+        return res.json({
+            status: 200,
+            results: {
+                youVotedFor: user.valentineVote ? {
+                    name: user.valentineVote.votedFor.Name,
+                    username: user.valentineVote.votedFor.User_Name,
+                    email: user.valentineVote.votedFor.email
+                } : null,
+                votedForYou: admirers.map(admirer => ({
+                    name: admirer.Name,
+                    username: admirer.User_Name,
+                    email: admirer.email
+                }))
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching valentine results:", error);
+        return res.json({ status: 500, error: 'Failed to fetch results' });
     }
 }
 
